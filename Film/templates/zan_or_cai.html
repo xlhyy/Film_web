@@ -1,0 +1,34 @@
+{% load staticfiles %}
+<li>
+    {% if request.session.zan_status == 'a_like' %}
+        <a><img class="zanButton" src="{% static 'img/赞3.png' %}" /></a>
+        <span class="zanCount" style="color: red">{{ zan_count }}</span>
+    {% else %}
+        <a><img class="zanButton" src="{% static 'img/赞2.png' %}" /></a>
+        <span class="zanCount" style="color: gray">{{ zan_count }}</span>
+    {% endif %}
+</li>
+<li>
+    {% if request.session.cai_status == 'a_hate' %}
+        <a><img class="caiButton" src="{% static 'img/踩3.png' %}" /></a>
+        <span class="caiCount" style="color: black">{{ cai_count }}</span>
+    {% else %}
+        <a><img class="caiButton" src="{% static 'img/踩2.png' %}" /></a>
+        <span class="caiCount" style="color: gray">{{ cai_count }}</span>
+    {% endif %}
+</li>
+
+<script>
+    $('.zanButton').click(function () {
+        var name = $('.infos_name').text();
+        $.get('/zan',{'name':name},function (ret) {
+            $('.zanOrCaiBox').html(ret);
+        })
+    });
+    $('.caiButton').click(function () {
+        var name = $('.infos_name').text();
+        $.get('/cai',{'name':name},function (ret) {
+            $('.zanOrCaiBox').html(ret);
+        })
+    });
+</script>

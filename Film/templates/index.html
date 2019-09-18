@@ -1,0 +1,238 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <script type="text/javascript" src="{% static 'js/jquery-3.0.0.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+    <script>    //鼠标拖尾
+        var color_list = ['yellow', 'greenyellow', 'orangered']
+        var color_index = 0;
+
+        function test(e) {
+            //这里可得到鼠标X坐标
+            var pointX = e.pageX;
+            //这里可以得到鼠标Y坐标
+            var pointY = e.pageY;
+            color_index += 1;
+
+            $('<div class="circle" style="position: absolute;width: 20px;height: 20px;border-radius: 50px;"></span>').appendTo('body');
+            $('.circle:last').css('top', (pointY+20) + 'px');
+            $('.circle:last').css('left', (pointX+20) + 'px');
+            $('.circle:last').css('animation', 'name1 1s forwards');
+            $('.circle:last').css('background', color_list[color_index % 4]);
+        }
+    </script>
+</head>
+<body onmousemove="test(event)">
+<div class="cover"></div>
+
+<div class="showBoxCover">
+    <img style="width: 100%;height: 100%" src="{% static '/img/2222.png' %}">
+</div>
+
+<div class="myCommentBox">
+    <div class="commentBox">
+
+    </div>
+    <p class="closeComment"><b>退出评论</b></p>
+    <div class="write_comment_box">
+        <div class="comment_animation_button">写评论/关闭写评论</div>
+        <input type="text" class="comment_write_Text"/>
+        <input type="button" class="send_comment_button" value="发表"/>
+    </div>
+</div>
+
+<div class="myCollectBox">
+    <p class="close_myCollection"><b>退出看单</b></p>
+    <div class="mcHeaderBox">
+        <div class="music">
+            <div class="cd">
+                <img src="{% static '/天空之城.jpg' %}">
+            </div>
+            <div class="arm"></div>
+        </div>
+        <div class="runMusicTitle">
+            <p class="runMusicTitleText">久石让-シータとパズー(《天空之城》动漫插曲).mp3</p>
+        </div>
+        <div class="runLineBox">
+            <div class="runLine"></div>
+        </div>
+    </div>
+    <div></div>
+    <div class="mcContentBox">
+
+    </div>
+</div>
+
+<div class="login_block">
+    <form action="/login/" method="post">
+        {% csrf_token %}
+        <p class="title"><b>用户登录</b></p>
+        <p class="userNameText1">用户名:</p>
+        <input type="text" name="username" class="userNameInput1" placeholder="请输入用户名"/>
+        <p class="passWordText1">密码 :</p>
+        <input type="password" name="password" class="passWordInput1" placeholder="请输入密码"/>
+        <a class="closeButton">关闭</a>
+        <p class="login_failure"></p>
+        <p class="login_success"></p>
+        <input type="button" class="register_now" value="立即注册">
+        <input type="submit" class="submitButton1" value="登录"/>
+    </form>
+</div>
+
+<div class="register_block">
+    <form action="/register/" method="post">
+        {% csrf_token %}
+        <p class="title"><b>用户注册</b></p>
+        <p class="userNameText">用户名:</p>
+        <input type="text" name="r_username" class="userNameInput" placeholder="请输入用户名"/>
+        <p class="passWordText">密码 :</p>
+        <input type="password" name="r_password" class="passWordInput" placeholder="请输入密码"/>
+        <p class="r_passWordText">确认密码:</p>
+        <input type="password" name="r_r_password" class="r_passWordInput" placeholder="请再次输入密码"/>
+
+        <a class="closeButton">关闭</a>
+        <p class="register_failure"></p>
+        <p class="register_success"></p>
+        <input type="submit" class="submitButton2" value="注册"/>
+    </form>
+</div>
+
+
+<div class="playBox">
+
+</div>
+<div class="rollBarrageBox">
+
+</div>
+<div class="writeBarrageBox">
+    <input type="text" class="writeBarrageInput"/>
+    <input type="button" class="writeBarrageButton" value="发送弹幕"/>
+    <input type="text" id="txt" style="display: none;">
+</div>
+
+<div class="header">
+    <div class="headerFirstLine">
+        <div class="headerFirstLineLogo">
+            <a href="/"><img src="{% static 'img/logo1.png' %}"/></a>
+        </div>
+        {% if request.session.login_status is True %}
+            <a class="welcome">欢迎，{{ request.session.user }}</a>
+            <a class="myCollectButton">我的看单</a>
+            <a class="loginoutButton" href="\logout">注销</a>
+        {% else %}
+            <a class="loginButton">登录</a>
+            <a class="registerButton">注册</a>
+        {% endif %}
+    </div>
+    <div class="headerSearchLine">
+        <div class="headerSearchLineBox">
+            <div class="headerSearchLineBoxText">
+                搜索&nbsp;&nbsp;
+            </div>
+            <form action="/top250/search" method="get">
+                <input class="search_box" name="search" type="text" placeholder="请输入搜索内容"/>
+                <input type="submit" class="headerSearchLineBoxButton" value=""/>
+            </form>
+        </div>
+    </div>
+    <div class="headerLbBox">
+        <img class="lbLeftButton" style="border-radius: 0px" src="{% static 'img/lbLeft.png' %}"/>
+        <img class="lbRightButton" style="border-radius: 0px" src="{% static 'img/lbRight.png' %}"/>
+        <div id="lbBox">
+            <img src="{% static 'img/lbImg11.jpg' %}"/>
+            <img src="{% static 'img/lbImg22.jpg' %}"/>
+            <img src="{% static 'img/lbImg33.jpg' %}"/>
+            <img src="{% static 'img/lbImg44.jpg' %}"/>
+        </div>
+    </div>
+    <div class="headerLbPoint">
+        <div class="point"></div>
+        <div class="point"></div>
+        <div class="point"></div>
+        <div class="point"></div>
+    </div>
+</div>
+
+{% if success is True %}
+    <p class="status">登录成功</p>
+{% endif %}
+{% if success is False %}
+    <p class="status">登录失败</p>
+{% endif %}
+{% if r_success is True %}
+    <p class="status">注册成功</p>
+{% endif %}
+{% if r_success is False %}
+    <p class="status">注册失败</p>
+{% endif %}
+
+
+<div class="bodyer">
+    <div class="bodyFirstLine">
+        <p class="recommend_title">电影推荐</p>
+        <p class="type_show">——&nbsp;{{ request.session.now_type }}&nbsp;——</p>
+        <ul>
+            {% for i in type_list %}
+                <li class="type_li">
+                    <a href="/top250/?type={{ i }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <hr/>
+    </div>
+
+    <div class="bodyContentLine" style="float: none">
+        {% if search_content != '' %}
+            <p style="position:absolute;text-align: center;color: gray;font-size: 24px;top: 10%;left: 38%;">{{ search_content }}</p>
+        {% endif %}
+        {% for i in obj %}
+            <div class="bodyContentBox" title="{{ i.intros }}">
+                <img class="contentImg" src="{% static i.posters %}"/>
+                <p class="bodyContentGrades">{{ i.grades }}</p>
+                <div class="bodyContentText">
+                    <b>{{ i.names }}</b>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="bodyLastLine">
+        <div class="More">
+            查看更多
+        </div>
+    </div>
+</div>
+
+<div class="bodySpreadBox">
+    <img src="{% static 'img/spreadImg1.jpg' %}"/>
+    <img src="{% static 'img/spreadImg2.jpg' %}"/>
+    <img src="{% static 'img/spreadImg3.jpg' %}"/>
+    <img src="{% static 'img/spreadImg4.jpg' %}"/>
+</div>
+
+<div class="footer">
+    <div class="footerFirstLine"></div>
+    <div class="footerContentBox">
+        <img class="footerLogo" src="{% static 'img/logo1.png' %}"/>
+        <ul class="ul1">
+            <li>加入我们</li>
+            <li>联系我们</li>
+            <li>隐私政策</li>
+            <li>问题反馈</li>
+        </ul>
+        <p>关注我们</p>
+        <img class="VxLogo" src="{% static 'img/vx.png' %}"/>
+        <ul class="ul2">
+            <li>举报中心电话:xxxxxxxx 举报中心邮箱:xxxx@ocean.com</li>
+            <li>xxxxxx有限公司 Copyright 2024- Ocean.com Inc. All right reserved.</li>
+            <li>xICP证xxxxxx号 网络视听许可证xxxxxxxx号 网络文化经营许可证 广播电视节目制作经营许可证(x)字第xxxx号</li>
+        </ul>
+        <img src=""/>
+    </div>
+</div>
+
+</body>
+</html>

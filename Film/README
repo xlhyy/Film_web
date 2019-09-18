@@ -1,0 +1,17 @@
+python3
+
+
+sudo pip3 install django-admin
+sudo pip3 install Django==2.2.5
+
+django-admin.py startproject 项目名
+python3 manage.py startapp app名
+python3 manage.py runserver
+
+
+Django	2.1.12	3.0a1
+Pillow-PIL	0.1.dev0	0.1dev
+PyMySQL	0.9.3	0.9.3
+django-admin	2.0.0	2.0.0
+qrcode	6.1	6.1
+

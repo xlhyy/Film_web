@@ -1,0 +1,23 @@
+{% if barrageObj %}
+    <span class="writeBarrageInput_add" style="position: absolute">{{ barrageObj.barrage_text }}</span>
+{% endif %}
+
+<script>
+    $(function () {
+        function randNum1(minnum , maxnum){
+            return Math.floor(minnum + Math.random() * (maxnum - minnum));
+        }
+
+        var boxHeight1 = $('.rollBarrageBox').height();
+        var rand_height1 = parseInt(Math.random() * (boxHeight1/1)-30);
+        var rand_color1 = randNum1(100000,999999);
+        var rand_fontsize1 = randNum1(18,25);
+        var rand_id1 = parseInt(Math.random() * 999999);
+
+        $('.writeBarrageInput_add:last').css('id',rand_id1);
+        $('.writeBarrageInput_add:last').css('top',rand_height1+'px');
+        $('.writeBarrageInput_add:last').css('color','#'+rand_color1);
+        $('.writeBarrageInput_add:last').css('font-size',rand_fontsize1+'px');
+        $('.writeBarrageInput_add:last').css('animation','spanAnimation 14s linear forwards');
+    });
+</script>

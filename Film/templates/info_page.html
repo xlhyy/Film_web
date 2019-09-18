@@ -1,0 +1,201 @@
+{% load staticfiles %}
+<p class="playBoxTitle"><b>电影详情</b></p>
+<img class="posterImg" src="{% static infos.posters %}" />
+{% if is_login is True %}
+    <p class="comment"><b>查看评论</b></p>
+{% endif %}
+{% if is_login is True %}
+    <ul class="zanOrCaiBox">
+        <li>
+            {% if request.session.zan_status == 'a_like' %}
+                <a><img class="zanButton" src="{% static 'img/赞3.png' %}" /></a>
+                <span class="zanCount" style="color: red">{{ zan_count }}</span>
+            {% else %}
+                <a><img class="zanButton" src="{% static 'img/赞2.png' %}" /></a>
+                <span class="zanCount" style="color: gray">{{ zan_count }}</span>
+            {% endif %}
+        </li>
+        <li>
+            {% if request.session.cai_status == 'a_hate' %}
+                <a><img class="caiButton" src="{% static 'img/踩3.png' %}" /></a>
+                <span class="caiCount" style="color: black">{{ cai_count }}</span>
+            {% else %}
+                <a><img class="caiButton" src="{% static 'img/踩2.png' %}" /></a>
+                <span class="caiCount" style="color: gray">{{ cai_count }}</span>
+            {% endif %}
+        </li>
+    </ul>
+{% endif %}
+
+<ul class="actionButton">
+    {% if is_login is True %}
+        {% if is_collect is True %}
+            <li class="cancel_collect_islogin"><b>取消看单</b></li>
+        {% else %}
+            <li class="click_collect_islogin"><b>加入看单</b></li>
+        {% endif %}
+        <li class="playButton"><b>在线播放</b></li>
+    {% else %}
+            <li class="click_collect_nologin"><b>加入看单</b></li>
+            <li class="playButton_nologin"><b>在线播放</b></li>
+    {% endif %}
+</ul>
+
+<ul class="filmInfo">
+    <li >&nbsp;<b>电影名:</b> {{ infos.names }}</li>
+    <li>&nbsp;<b>评分:</b> {{ infos.grades }}</li>
+    <li>&nbsp;<b>类型:</b> {{ infos.types }}</li>
+    <li>&nbsp;<b>导演:</b> {{ infos.directors }}</li>
+    <li>&nbsp;<b>编剧:</b> {{ infos.writers }}</li>
+    <li>&nbsp;<b>主演:</b> {{ infos.actors }}</li>
+    <li>&nbsp;<b>国家/地区:</b> {{ infos.countrys }}</li>
+    <li>&nbsp;<b>语言:</b> {{ infos.languages }}</li>
+    <li>&nbsp;<b>上映时间:</b> {{ infos.show_times }}</li>
+    <li>&nbsp;<b>片长:</b> {{ infos.run_times }}</li>
+    <br />
+    <li class="infos_name" style="display: none;">{{ infos.names }}</li>
+</ul>
+<div class="qrcode_block">
+    <img class="qrcode" src="/qrcode?link={{ infos.aiqiyi_urls }}">
+</div>
+<p class="filmIntro">&nbsp;<b>简介:</b> {{ infos.contents }}</p>
+<div class="bottomButtonBox">
+    <img class="bottomButton" src="{% static 'img/bottom_button.jpg' %}" />
+
+</div>
+<iframe class="showBox" src=""></iframe>
+<input type="button" class="sendBarrageButton" value="发弹幕" />
+
+<select class="choosePlaySourse" style="border-radius: 0px;">
+    <option hidden value="default" selected>切换播放源</option>
+    {% if infos.aiqiyi_urls != ' ' %}
+    <option value='aiqiyi'>爱奇艺视频</option>
+    {% endif %}
+
+    {% if infos.youku_urls != ' ' %}
+    <option value='youku'>优酷视频</option>
+    {% endif %}
+
+    {% if infos.tengxun_urls != ' ' %}
+    <option value='tengxun'>腾讯视频</option>
+    {% endif %}
+
+    {% if infos.souhu_urls != ' ' %}
+    <option value='souhu'>搜狐视频</option>
+    {% endif %}
+</select>
+<script>
+        $(".showBox").css('display','none');
+
+        $(".playButton").click(function(){
+           $(".showBox").css('display','block');
+           $('.showBoxCover').css('display','block');
+           $('.showBoxCover').css('animation','showCoverApp 1s forwards');
+           $('.sendBarrageButton').css('display','block');
+           $(".choosePlaySourse").css('display','block');
+           $(".choosePlaySourse").css('z-index',4);
+        });
+        $(".bottomButtonBox").click(function() {
+            $('.showBoxCover').css('animation','showCoverDis 1s forwards');
+            $(".playBox").addClass('playBoxAnimationUp');
+            $(".showBox").addClass('playBoxAnimationUp');
+            $(".playBox").removeClass('playBoxAnimationDown');
+            $(".showBox").removeClass('playBoxAnimationDown');
+            $(".showBox").attr("src","");
+            $('.sendBarrageButton').css('display','none');
+            $('.rollBarrageBox').css('display','none');
+            $('.writeBarrageBox').css('display','none');
+            {#delay(2000);#}
+            $('.showBoxCover').css('display','none');
+
+        });
+        $('.click_collect_nologin').click(function () {
+            $('.login_block').css('display','block');
+            $('.cover').css('display','block');
+            $("body").css("overflow","hidden")
+        });
+        $('.playButton_nologin').click(function () {
+            $('.login_block').css('display','block');
+            $('.cover').css('display','block');
+            $("body").css("overflow","hidden")
+        });
+        $('.click_collect_islogin').click(function () {
+            infos_name = $('.infos_name').text();
+            $.get('/collect',{'collect_name':infos_name,},function (ret) {
+                $('.playBox').html(ret)
+            });
+        });
+        $('.cancel_collect_islogin').click(function () {
+            infos_name = $('.infos_name').text();
+            $.get('/cancel_collect',{'collect_name':infos_name},function (ret) {
+                $('.playBox').html(ret);
+            });
+
+            $.get('/getMyCollection',{},function (ret1) {
+                $('.mcContentBox').html(ret1);
+            });
+        });
+
+        $('.cancel_collect_islogin').click(function () {
+            $.get('/getMyCollection',{},function (ret1) {
+                $('.mcContentBox').html(ret1);
+            });
+        });
+        $(".choosePlaySourse").change(function () {
+            var link = $(".choosePlaySourse option:selected").val();
+            switch (link) {
+                case "aiqiyi":
+                    $(".showBox").attr("src", "http://www.wmxz.wang/video.php?url={{ infos.aiqiyi_urls }}");
+                    break;
+                case "youku":
+                    $(".showBox").attr("src", "http://www.wmxz.wang/video.php?url={{ infos.youku_urls }}");
+                    break;
+                case "tengxun":
+                    $(".showBox").attr("src", "http://www.wmxz.wang/video.php?url={{ infos.tengxun_urls }}");
+                    break;
+                case "souhu":
+                    $(".showBox").attr("src", "http://www.wmxz.wang/video.php?url={{ infos.souhu_urls }}");
+                    break;
+            }
+        });
+        $('.zanButton').click(function () {
+            var name = $('.infos_name').text();
+            $.get('/zan',{'name':name},function (ret) {
+                $('.zanOrCaiBox').html(ret);
+            })
+        });
+        $('.caiButton').click(function () {
+            var name = $('.infos_name').text();
+            $.get('/cai',{'name':name},function (ret) {
+                $('.zanOrCaiBox').html(ret);
+            })
+        });
+        $('.comment').click(function () {
+            $(".playBox").addClass('playBoxAnimationUp');
+            $('.myCommentBox').css('display','block');
+            $('.write_comment_box').css('display','block');
+            var name = $('.infos_name').text();
+            $.get('/comment',{'name':name},function (ret) {
+                $('.commentBox').html(ret);
+            })
+        });
+
+        var barrageClickCount = 0;
+        $('.sendBarrageButton').click(function () {
+            if (barrageClickCount % 2) {
+                $('.sendBarrageButton').attr('value','发弹幕');
+                $('.rollBarrageBox').css('display','none');
+                $('.writeBarrageBox').css('animation','barrageBoxDownAnimation 1s forwards');
+                barrageClickCount += 1
+            } else {
+                $('.sendBarrageButton').attr('value','关闭弹幕');
+                $('.rollBarrageBox').css('display','block');
+                $('.writeBarrageBox').css('display','block')
+                $('.writeBarrageBox').css('animation','barrageBoxUpAnimation 1s forwards');
+                barrageClickCount += 1
+            }
+        });
+        $('.sendBarrageButton').click(function () {
+            $('.rollBarrageBox span').remove();
+        });
+</script>

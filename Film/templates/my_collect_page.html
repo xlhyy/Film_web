@@ -1,0 +1,33 @@
+{% load staticfiles %}
+
+<div class="mcContentBoxTitle">我的看单</div>
+<div class="mcContentBoxLine"></div>
+{% if collect_obj_list %}
+    {% for collect_obj in collect_obj_list%}
+        <div class="mcContentBoxContent" title={{ collect_obj.intros }}>
+            <img class="mcPlayButton" src="{% static 'img/mcPlayButton.png' %}" style="position:relative;width: 20px;top: 5px;left: 10px">
+            &nbsp;&nbsp;{{ collect_obj.grades }}
+            &nbsp;&nbsp;<span class="mc_name">{{ collect_obj.names }}</span>
+            &nbsp;&nbsp;<b>类型:</b>{{ collect_obj.types }}
+            &nbsp;&nbsp;<b>导演:</b>{{ collect_obj.directors }}
+            &nbsp;&nbsp;<b>语言:</b>{{ collect_obj.languages }}
+            &nbsp;&nbsp;<b>片长:</b>{{ collect_obj.run_times }}
+        </div>
+    {% endfor %}
+{% else %}
+    <p style="text-align: center;margin-top: 50px;font-size: 25px;color: darkgray;">暂无收藏</p>
+{% endif %}
+<div style="width: 100%;height: 500px;"></div>
+<script>
+    $('.mcPlayButton').click(function () {
+		$(".playBox").addClass('playBoxAnimationDown');
+		$(".playBox").removeClass('playBoxAnimationUp');
+    });
+
+	$(".mcPlayButton").click(function () {
+        var index = $(".mcPlayButton").index(this);
+        mc_name = $(".mc_name").eq(index).text();
+        $.get("/getInfo", {'name': mc_name}, function (ret) {
+        	$(".playBox").html(ret);})
+        });
+</script>
