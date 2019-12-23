@@ -7,24 +7,24 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
     <script type="text/javascript" src="{% static 'js/jquery-3.0.0.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
-    <script>    //鼠标拖尾
-        var color_list = ['yellow', 'greenyellow', 'orangered']
-        var color_index = 0;
+    <!--<script>    //鼠标拖尾-->
+        <!--var color_list = ['yellow', 'greenyellow', 'orangered']-->
+        <!--var color_index = 0;-->
 
-        function test(e) {
-            //这里可得到鼠标X坐标
-            var pointX = e.pageX;
-            //这里可以得到鼠标Y坐标
-            var pointY = e.pageY;
-            color_index += 1;
+        <!--function test(e) {-->
+            <!--//这里可得到鼠标X坐标-->
+            <!--var pointX = e.pageX;-->
+            <!--//这里可以得到鼠标Y坐标-->
+            <!--var pointY = e.pageY;-->
+            <!--color_index += 1;-->
 
-            $('<div class="circle" style="position: absolute;width: 20px;height: 20px;border-radius: 50px;"></span>').appendTo('body');
-            $('.circle:last').css('top', (pointY+20) + 'px');
-            $('.circle:last').css('left', (pointX+20) + 'px');
-            $('.circle:last').css('animation', 'name1 1s forwards');
-            $('.circle:last').css('background', color_list[color_index % 4]);
-        }
-    </script>
+            <!--$('<div class="circle" style="position: absolute;width: 20px;height: 20px;border-radius: 50px;"></span>').appendTo('body');-->
+            <!--$('.circle:last').css('top', (pointY+20) + 'px');-->
+            <!--$('.circle:last').css('left', (pointX+20) + 'px');-->
+            <!--$('.circle:last').css('animation', 'name1 1s forwards');-->
+            <!--$('.circle:last').css('background', color_list[color_index % 4]);-->
+        <!--}-->
+    <!--</script>-->
 </head>
 <body onmousemove="test(event)">
 <div class="cover"></div>

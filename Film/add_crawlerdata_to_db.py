@@ -36,7 +36,7 @@ def main():
                       languages[j], show_times[j], run_times[j], intros[j], contents[j], YouKu_urls[j], TengXun_urls[j], \
                       SouHu_urls[j], AiQiYi_urls[j]]
 
-            print(params)
+            # print(params)
             myhelper_obj.insert(sql,params=params)
 
         print('-' * 40)
