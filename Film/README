@@ -15,3 +15,9 @@ PyMySQL	0.9.3	0.9.3
 django-admin	2.0.0	2.0.0
 qrcode	6.1	6.1
 
+
+导入.sql文件:
+create database film charset=utf8;
+use film;
+source /Users/kaiqigu/test/Film_web/film.sql;
+
