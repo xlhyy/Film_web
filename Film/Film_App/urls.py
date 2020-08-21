@@ -25,6 +25,6 @@ urlpatterns = [
     path('cai/', views.cai),
     path('comment/', views.comment),
     path('write_comment/', views.write_comment),
-    path('send_barrage/', views.send_barrage),
-    path('get_barrage/', views.get_barrage),
+    # path('send_barrage/', views.send_barrage),
+    # path('get_barrage/', views.get_barrage),
 ]

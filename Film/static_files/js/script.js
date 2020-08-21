@@ -254,43 +254,43 @@ $(function() {
     });
 
     //弹幕
-    function randNum(minnum, maxnum) {
-        return Math.floor(minnum + Math.random() * (maxnum - minnum));
-    }
+//    function randNum(minnum, maxnum) {
+//        return Math.floor(minnum + Math.random() * (maxnum - minnum));
+//    }
+//
+//    var c = 0;
+//
+//    function myFunction() {
+//        setInterval(function () {
+//            c += 1;
+//            $.get('/get_barrage', {'now_count': c}, function (ret) {
+//
+//                $('.rollBarrageBox').append(ret);
+//            });
+//        }, 1000);
+//    }
+//    clearInterval();
+//    $('.playButton').click(myFunction());
 
-    var c = 0;
-
-    function myFunction() {
-        setInterval(function () {
-            c += 1;
-            $.get('/get_barrage', {'now_count': c}, function (ret) {
-
-                $('.rollBarrageBox').append(ret);
-            });
-        }, 1000);
-    }
-    clearInterval();
-    $('.playButton').click(myFunction());
-
-    var boxHeight = $('.rollBarrageBox').height();
-    $('.writeBarrageButton').click(function () {
-        var barrage_text = $('.writeBarrageInput').val();
-        var film_name = $('.infos_name').text();
-
-        var rand_height = parseInt(Math.random() * (boxHeight / 1) - 30);
-        var rand_color = randNum(100000, 999999);
-        var rand_fontsize = randNum(18, 25);
-        var rand_id = parseInt(Math.random() * 999999);
-
-        $('<span style="animation: spanAnimation 14s linear forwards;"></span>').appendTo('.rollBarrageBox');
-        $('.rollBarrageBox span:last').css('id', rand_id);
-        $('.rollBarrageBox span:last').css('top', rand_height+'px');
-        $('.rollBarrageBox span:last').css('color', '#' + rand_color);
-        $('.rollBarrageBox span:last').css('font-size', rand_fontsize + 'px');
-        $('.rollBarrageBox span:last').html(barrage_text);
-
-        $.get('/send_barrage', {'timeCount': c, 'barrageText': barrage_text, 'film_name': film_name});
-    });
+//    var boxHeight = $('.rollBarrageBox').height();
+//    $('.writeBarrageButton').click(function () {
+//        var barrage_text = $('.writeBarrageInput').val();
+//        var film_name = $('.infos_name').text();
+//
+//        var rand_height = parseInt(Math.random() * (boxHeight / 1) - 30);
+//        var rand_color = randNum(100000, 999999);
+//        var rand_fontsize = randNum(18, 25);
+//        var rand_id = parseInt(Math.random() * 999999);
+//
+//        $('<span style="animation: spanAnimation 14s linear forwards;"></span>').appendTo('.rollBarrageBox');
+//        $('.rollBarrageBox span:last').css('id', rand_id);
+//        $('.rollBarrageBox span:last').css('top', rand_height+'px');
+//        $('.rollBarrageBox span:last').css('color', '#' + rand_color);
+//        $('.rollBarrageBox span:last').css('font-size', rand_fontsize + 'px');
+//        $('.rollBarrageBox span:last').html(barrage_text);
+//
+//         $.get('/send_barrage', {'timeCount': c, 'barrageText': barrage_text, 'film_name': film_name});
+//    });
 
     $(function() {
             setInterval(function () {

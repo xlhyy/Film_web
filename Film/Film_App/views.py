@@ -311,7 +311,7 @@ def getMyCollection(request):
 
 # 生成二维码
 def generate_qrcode(request):
-    logo = "E:/far sight/PyCharmProjects/Film/static_files/img/logo4.png"
+    logo = "./static_files/img/logo4.png"
     qr = qrcode.QRCode(
         version=2,
         error_correction=qrcode.constants.ERROR_CORRECT_H,
@@ -404,10 +404,11 @@ def write_comment(request):
     return render(request,'comment.html',content)
 
 def send_barrage(request):
-    timeCount = request.GET.get('timeCount')
-    barrageText = request.GET.get('barrageText')
-    filmName = request.GET.get('film_name')
-    BarrageInfo.objects.create(barrage_text=barrageText,time_count=timeCount,film_name=filmName)
+    pass
+    # timeCount = request.GET.get('timeCount')
+    # barrageText = request.GET.get('barrageText')
+    # filmName = request.GET.get('film_name')
+    # BarrageInfo.objects.create(barrage_text=barrageText,time_count=timeCount,film_name=filmName)
 
 def get_barrage(request):
     now_count = str(request.GET.get('now_count'))
